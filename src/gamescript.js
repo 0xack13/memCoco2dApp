@@ -35,6 +35,10 @@ var game = cc.Layer.extend({
     this.addChild(totalText);
     totalText.setPosition(90,90);
       
+    var tileEnd = new endTile();
+    this.addChild(tileEnd,0);
+    tileEnd.setPosition(200,90);
+      
     for(i=0;i<16;i++){
       //var tile = cc.Sprite.create("assets/cover.png");
       var tile = new MemoryTile();
@@ -42,6 +46,33 @@ var game = cc.Layer.extend({
       this.addChild(tile,0);
       tile.setPosition(49+i%4*74,400-Math.floor(i/4)*74);
     }
+  }
+});
+
+var endTile = cc.Sprite.extend({
+  ctor:function() {
+    this._super();
+    this.initWithFile("assets/start_n.png");
+    cc.eventManager.addListener(endListener.clone(), this);
+  }
+});
+
+var endListener = cc.EventListener.create({
+  event: cc.EventListener.TOUCH_ONE_BY_ONE,
+  swallowTouches: true,
+  onTouchBegan: function (touch, event) {
+        var target = event.getCurrentTarget();
+        var location = target.convertToNodeSpace(touch.getLocation());
+        var targetSize = target.getContentSize();
+        var targetRectangle = cc.rect(0, 0, targetSize.width, targetSize.height);
+        if (cc.rectContainsPoint(targetRectangle, location)) {
+            console.log("Click end!!!");
+            cc.log("==game over");
+            cc.director.pause();
+            cc.director.runScene(new gameScene());
+            totalMatches = 0;
+            moves = 0;
+        }
   }
 });
 

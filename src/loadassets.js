@@ -7,5 +7,6 @@ var gameResources = [
   "assets/tile_4.png",
   "assets/tile_5.png",
   "assets/tile_6.png",
-  "assets/tile_7.png"
+  "assets/tile_7.png",
+  "assets/start_n.png"
 ];

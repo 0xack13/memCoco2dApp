@@ -1,7 +1,8 @@
 var gameArray = [0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7];
 var pickedTiles = [];
-var scoreText;
+var scoreText, totalText;
 var moves=0;
+var totalMatches=0;
 
 var gameScene = cc.Scene.extend({
   onEnter:function () {
@@ -14,19 +15,26 @@ var gameScene = cc.Scene.extend({
 });
 
 var shuffle = function(v){
-for(var j, x, i = v.length; i; j = parseInt(Math.random() * i),x = v[--i], v[i] = v[j], v[j] = x);
-return v;
+    for(var j, x, i = v.length; i; j = parseInt(Math.random() * i),x = v[--i], v[i] = v[j], v[j] = x);
+        return v;
 };
 
 var game = cc.Layer.extend({
   init:function () {
     this._super();
     var gradient = cc.LayerGradient.create(cc.color(0,0,0,255),
-        cc.color(0x46,0x82,0xB4,255));
+    cc.color(0x46,0x82,0xB4,255));
     this.addChild(gradient);
-      scoreText = cc.LabelTTF.create("Moves: 0","Arial","32",cc.TEXT_ALIGNMENT_CENTER);
+    
+    scoreText = cc.LabelTTF.create("Moves: 0","Arial","32",cc.TEXT_ALIGNMENT_CENTER);
     this.addChild(scoreText);
     scoreText.setPosition(90,50);
+      
+    
+    totalText = cc.LabelTTF.create("Total: 0","Arial","32",cc.TEXT_ALIGNMENT_CENTER);
+    this.addChild(totalText);
+    scoreText.setPosition(90,40);
+      
     for(i=0;i<16;i++){
       //var tile = cc.Sprite.create("assets/cover.png");
       var tile = new MemoryTile();
@@ -79,6 +87,8 @@ function checkTiles(){
     else{
       gameLayer.removeChild(pickedTiles[0]);
       gameLayer.removeChild(pickedTiles[1]);
+      totalMatches++;
+      totalText.setString("Total: "+totalMatches);
     }
     pickedTiles = [];
   },500);

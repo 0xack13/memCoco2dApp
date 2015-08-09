@@ -33,7 +33,7 @@ var game = cc.Layer.extend({
     
     totalText = cc.LabelTTF.create("Total: 0","Arial","32",cc.TEXT_ALIGNMENT_CENTER);
     this.addChild(totalText);
-    scoreText.setPosition(90,40);
+    totalText.setPosition(90,90);
       
     for(i=0;i<16;i++){
       //var tile = cc.Sprite.create("assets/cover.png");
